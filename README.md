@@ -8,7 +8,7 @@ Implemented Image reading, writing, preprocessing etc.
 Implementation of CNN layers
 ### - Conv2d
 Implemented simple convolution layer for gray scale images
-## 5. Examples
+## 4. Examples
 Vertical egde detection filter output on example image by passing it through conv2D layer
 ## Future Steps
 * Add supprot for 3-D images (RGB)
