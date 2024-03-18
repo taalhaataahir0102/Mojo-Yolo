@@ -4,6 +4,7 @@ from ImageProcessing.store import save_image
 from ImageProcessing.write import write_image
 from ImageProcessing.normalization import normalize
 from Layers.Conv2D import Conv2D, pading
+from Layers.Maxpooling import maxpool
 
 fn main() raises:
     # Reading Input image using opencv
@@ -14,6 +15,12 @@ fn main() raises:
     # Saving image in the data structure created
     save_image(img,image)
     print("Input image shape: ", img.dim0, img.dim1)
+
+    # img.__printarray__()
+    # print("img shape before max pooling: ", img.dim0, img.dim1)
+    # maxpool(img,2)
+    # print("img shape after max pooling: ", img.dim0, img.dim1)
+    # img.__printarray__()
 
     # Creating filter
     var fltr = Array2D(3,3)
@@ -36,5 +43,3 @@ fn main() raises:
     # Normalizing Image
     var r:Array2D = normalize(output)
     write_image(r,"Example/output.jpeg")
-
-
