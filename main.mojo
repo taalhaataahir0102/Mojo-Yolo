@@ -30,11 +30,11 @@ fn main() raises:
     fltr.__printarray__()
 
     # Applying Convolution
-    var output:Array2D = Conv2D(img,fltr,20,1)
+    var output:Array2D = Conv2D(img,fltr,1,1,0.0)
     print("Image shape after conv ", output.dim0, output.dim1)
 
     # Normalizing Image
     var r:Array2D = normalize(output)
-    write_image(r,"output.jpeg")
+    write_image(r,"Example/output.jpeg")
 
 

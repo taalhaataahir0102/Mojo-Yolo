@@ -1,17 +1,17 @@
 struct Array2D(CollectionElement):
-    var data: Pointer[Int]
+    var data: Pointer[Float32]
     var dim0: Int
     var dim1: Int
 
     fn __init__(inout self, dim0: Int, dim1: Int):
         self.dim0 = dim0
         self.dim1 = dim1
-        self.data = Pointer[Int].alloc(dim0 * dim1)
+        self.data = Pointer[Float32].alloc(dim0 * dim1)
     
     fn __copyinit__(inout self, other: Array2D):
         self.dim0 = other.dim0
         self.dim1 = other.dim1
-        self.data = Pointer[Int].alloc(self.dim0 * self.dim1)
+        self.data = Pointer[Float32].alloc(self.dim0 * self.dim1)
         for i in range(self.dim0 * self.dim1):
             self.data.store(i, other.data.load(i))
     
@@ -20,10 +20,10 @@ struct Array2D(CollectionElement):
         self.dim1 = existing.dim1
         self.data = existing.data
 
-    fn __getitem__(borrowed self, i: Int, j: Int) -> Int:
+    fn __getitem__(borrowed self, i: Int, j: Int) -> Float32:
         return self.data.load(i * self.dim1 + j)
 
-    fn __setitem__(inout self, i: Int, j: Int, value: Int):
+    fn __setitem__(inout self, i: Int, j: Int, value: Float32):
         self.data.store(i * self.dim1 + j, value)
 
     fn __del__(owned self):

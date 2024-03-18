@@ -8,8 +8,8 @@ fn get_subarray(img: Array2D, start_row: Int, start_col: Int, row_size: Int, col
                 subarray.__setitem__(i, j, img.__getitem__(start_row + i, start_col + j))
         return subarray
     
-fn multiply_and_sum(a: Array2D, b: Array2D) -> Int:
-    var sum:Int = 0
+fn multiply_and_sum(a: Array2D, b: Array2D) -> Float32:
+    var sum:Float32 = 0
     for i in range(a.dim0):
         for j in range(a.dim1):
             sum += a.__getitem__(i, j) * b.__getitem__(i, j)
@@ -26,9 +26,7 @@ fn pading(inout img: Array2D, pad:Int):
             new_img.__setitem__(i+pad, j+pad, img.__getitem__(i,j))
     img  = new_img
 
-
-
-fn Conv2D(inout img: Array2D, filter: Array2D, pad:Int, stride: Int) raises -> Array2D:
+fn Conv2D(inout img: Array2D, filter: Array2D, pad:Int, stride: Int, bias: Float32) raises -> Array2D:
     var input = py.import_module("builtins").input
     var h:Int = img.dim0
     var w:Int = img.dim1
@@ -40,5 +38,5 @@ fn Conv2D(inout img: Array2D, filter: Array2D, pad:Int, stride: Int) raises -> A
     for i in range(n_h):
         for j in range(n_w):
             var subarray:Array2D = get_subarray(img,i*stride ,j*stride,f,f)
-            result.__setitem__(i,j,multiply_and_sum(subarray,filter))
+            result.__setitem__(i,j,multiply_and_sum(subarray,filter) + bias)
     return result

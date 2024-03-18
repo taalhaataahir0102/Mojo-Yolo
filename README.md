@@ -22,5 +22,5 @@ Vertical egde detection filter output on example image by passing it through con
 * Implement additional functions required for yolo (IOU etc.)
 * Study yolo weights file and load yolo weights in my model.
 ## Issues
-* difficult to test n-dimentional array stacks in CNN
+* n-dimentional array stacks in CNN
 * Major problem: How to load the weights into my model? Parsing the weights file.
