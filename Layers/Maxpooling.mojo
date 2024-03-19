@@ -1,4 +1,4 @@
-from DataStructure.TensorVector import Array2D
+from DataStructure.Array2D import Array2D
 from math import ceil, floor
 
 fn get_subarray(img: Array2D, start_row: Int, start_col: Int, row_size: Int, col_size: Int) -> Array2D:
@@ -19,7 +19,7 @@ fn maxi(img: Array2D) -> Float32:
                 m = img.__getitem__(i,j)
     return m
 
-fn maxpool(inout img: Array2D, pool:Int):
+fn maxpool(inout img: Array2D, pool:Int) -> Array2D:
     var new_img = Array2D(int(ceil(img.dim0/pool)), int(ceil(img.dim1/pool)))
     for i in range(0, img.dim0, pool):
         for j in range(0, img.dim1, pool):
@@ -28,7 +28,7 @@ fn maxpool(inout img: Array2D, pool:Int):
             var r:Int = i // pool
             var c:Int = j // pool
             new_img.__setitem__(r, c, m)
-    img = new_img
+    return new_img
 
 
 

@@ -1,5 +1,5 @@
 from python import Python
-from DataStructure.TensorVector import Array2D
+from DataStructure.Array2D import Array2D
 
 def write_image(img:Array2D, out:String) -> None:
     var cv = Python.import_module("cv2")

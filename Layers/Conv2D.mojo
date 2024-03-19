@@ -1,4 +1,4 @@
-from DataStructure.TensorVector import Array2D
+from DataStructure.Array2D import Array2D
 from python import Python as py
 
 fn get_subarray(img: Array2D, start_row: Int, start_col: Int, row_size: Int, col_size: Int) -> Array2D:

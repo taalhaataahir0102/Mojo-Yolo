@@ -1,4 +1,4 @@
-from DataStructure.TensorVector import Array2D
+from DataStructure.Array2D import Array2D
 
 fn normalize(inout img: Array2D) -> Array2D:
     var minimum = img.__getitem__(0,0)
