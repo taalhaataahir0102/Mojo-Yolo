@@ -9,3 +9,13 @@ fn flatten(img: Array3D) -> Array2D:
                 flat.__setitem__(0,col_index, img.__getitem__(i,j,k))
                 col_index+=1
     return flat
+
+fn flatten2(img: Array3D) -> Array2D:
+    var flat = Array2D(1,img.dim0*img.dim1*img.dim2)
+    var col_index:Int = 0
+    for k in range(img.dim2):
+        for i in range(img.dim0):
+            for j in range(img.dim1):
+                flat.__setitem__(0,col_index, img.__getitem__(i,j,k))
+                col_index+=1
+    return flat

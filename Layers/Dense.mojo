@@ -3,6 +3,7 @@ from DataStructure.Array2D import Array2D
 
 fn dense(img: Array2D, weights: Array2D, bias: DynamicVector[Float32]) -> Array2D:
     var output = Array2D(img.dim0,weights.dim1)
+    print(output.dim0, output.dim1)
     for m in range(output.dim0):
         for n in range(output.dim1):
             var sum:Float32 = 0
