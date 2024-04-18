@@ -186,7 +186,11 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
     var dense_layer:Bool = False
 
     var loop_size:Int = 0
+
+    print("STARTING")
+    print(len(split_content))
     for i in range(len(split_content)):
+        # print(i)
         conv2d_layer = False
         dense_layer = False
         bais_layer = False
@@ -216,6 +220,9 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
             i+=1
 
 
+        # if conv2d_layer == False and dense_layer == False and bais_layer == False:
+        #     continue
+        # else:
         for j in range(loop_size):
             if conv2d_layer == True and dense_layer == False and bais_layer == False:
                 var num:Float32 = extract_number(split_content[i])
@@ -234,6 +241,16 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
                 var index1:Int = j % dense_weights[dense_index-1].dim1
                 dense_weights[dense_index-1].__setitem__(index0,index1,num)
             i+=1
+
+            if i == 10000:
+                print("yes")
+            if i == 50000:
+                print("yes2")
+            if i == 100000:
+                print("yes3")
+
+        loop_size = 0
+
 
     # print("WEIGHTS")
     # # for i in range(len(conv2D_weights)):

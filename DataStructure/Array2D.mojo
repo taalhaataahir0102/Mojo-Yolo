@@ -41,6 +41,15 @@ struct Array2D(CollectionElement):
             if i < 9 or i > self.dim0 - 9:
                 print()
 
+    fn save_to_file(borrowed self, path: String) raises:
+        
+        with open(path, "w") as out:
+            for i in range(self.dim0):
+                for j in range(self.dim1):
+                    var value = self.__getitem__(i, j)
+                    out.write(str(value) + "\n")
+            out.close()
+
 
 struct Array3D(CollectionElement):
     var data: Pointer[Float32]
@@ -86,8 +95,12 @@ struct Array3D(CollectionElement):
                     if (k < 8 or k > self.dim1- 8) and (j < 8 or j > self.dim0 - 8):
                         print(self.__getitem__(i,j,k), end = ",")
                     elif k == 9 and (j < 9 or j > self.dim0 - 9):
-                        print(",...", end = ",")
+                        print("...", end = ",")
                     else:
                         continue
                 if j < 9 or j > self.dim0 - 9:
                     print()
+
+
+# [3,2,2,2]
+# [6,2,2]

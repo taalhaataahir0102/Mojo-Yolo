@@ -69,7 +69,7 @@ def main():
         for key, value in weights.items():
             file.write(f"Key: {key}, Shape: {value.shape}\n")
             print_array(value, file)
-            file.write("\n")
+            # file.write("\n")
 
 
 if __name__ == "__main__":
