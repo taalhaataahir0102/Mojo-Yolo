@@ -2,8 +2,8 @@ from python import Python
 from python import Python as py
 from DataStructure.Array2D import Array2D, Array3D
 
-fn layers_manipulation(s:String, l:Int) -> DynamicVector[String]:
-    var k = DynamicVector[String] (capacity = l)
+fn layers_manipulation(s:String, l:Int) -> List[String]:
+    var k = List[String] (capacity = l)
     var str_len:Int = s.__len__()
     var idx:Int = 0
     var found:Bool = False
@@ -26,29 +26,29 @@ fn layers_manipulation(s:String, l:Int) -> DynamicVector[String]:
     return k
 
 
-fn get_total_conv_layers(layers: DynamicVector[String])->Int:
+fn get_total_conv_layers(layers: List[String])->Int:
     var ans:Int = 0
     for i in range(len(layers)):
         if layers[i].__contains__("conv2d") and layers[i].__contains__("kernel"):
             ans+=1
     return ans
 
-fn get_total_dense_layers(layers: DynamicVector[String])->Int:
+fn get_total_dense_layers(layers: List[String])->Int:
     var ans:Int = 0
     for i in range(len(layers)):
         if layers[i].__contains__("dense") and layers[i].__contains__("kernel"):
             ans+=1
     return ans
 
-fn get_total_bias_layers(layers: DynamicVector[String])->Int:
+fn get_total_bias_layers(layers: List[String])->Int:
     var ans:Int = 0
     for i in range(len(layers)):
         if layers[i].__contains__("bias"):
             ans+=1
     return ans
 
-fn shape_manipulation(s:String, l:Int) -> DynamicVector[String]:
-    var k = DynamicVector[String] (capacity = l)
+fn shape_manipulation(s:String, l:Int) -> List[String]:
+    var k = List[String] (capacity = l)
     var str_len:Int = s.__len__()
     var idx:Int = 0
     var found:Bool = False
@@ -75,9 +75,9 @@ fn shape_manipulation(s:String, l:Int) -> DynamicVector[String]:
         
     return k
 
-fn split_string(s:String, split:String) -> DynamicVector[String]:
+fn split_string(s:String, split:String) -> List[String]:
     var start:String = ''
-    var k = DynamicVector[String] ()
+    var k = List[String] ()
     for i in range(s.__len__()):
         if s[i] == split:
             k.append(start)
@@ -90,8 +90,8 @@ fn split_string(s:String, split:String) -> DynamicVector[String]:
         k.append(start)
         return k
 
-fn string_vec_to_int (inout s:DynamicVector[String]) raises -> DynamicVector[Int]:
-    var new_vec = DynamicVector[Int] ()
+fn string_vec_to_int (inout s:List[String]) raises -> List[Int]:
+    var new_vec = List[Int] ()
     for i in range(len(s)):
         s[i] = s[i].strip()
         var n:Int = atol(s[i])
@@ -100,25 +100,25 @@ fn string_vec_to_int (inout s:DynamicVector[String]) raises -> DynamicVector[Int
 
 
 fn extract_number(s:String) raises -> Float32:
-    Python.add_to_path("/home/talha/Desktop/mojo/yolo/Parser/")
+    Python.add_to_path("/home/lpt-10x/Desktop/Mojo-Yolo/Parser/")
     var mypython = Python.import_module("python_weights")
     var a: PythonObject = mypython.test(s)
     var b:Float32 = a.to_float64().cast[DType.float32]()
     return b
 
-fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weights:DynamicVector[Array2D], inout baises: DynamicVector[DynamicVector[Float32]]) raises:
+fn collect_weights(inout conv2D_weights:List[Array3D], inout dense_weights:List[Array2D], inout baises: List[List[Float32]]) raises:
     var input = py.import_module("builtins").input
-    Python.add_to_path("/home/talha/Desktop/mojo/yolo/Parser/")
+    Python.add_to_path("/home/lpt-10x/Desktop/Mojo-Yolo/Parser/")
     var mypython = Python.import_module("python_weights")
     var my_dict: PythonObject = mypython.main()
 
-    var dict: PythonObject = mypython.read_hdf5("/home/talha/Desktop/mojo/yolo/Parser/model_weights.h5")
+    var dict: PythonObject = mypython.read_hdf5("/home/lpt-10x/Desktop/Mojo-Yolo/Parser/model_weights.h5")
 
     var keys = dict.keys()
     var s: String = keys.__str__()
     var l:Int = keys.__len__()
     
-    var layers = DynamicVector[String] (capacity = l)
+    var layers = List[String] (capacity = l)
     layers = layers_manipulation(s,l)
 
     var total_conv_layers = get_total_conv_layers(layers)
@@ -126,9 +126,9 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
     var total_bias_layers = get_total_bias_layers(layers)
 
 
-    conv2D_weights = DynamicVector[Array3D] (capacity = total_conv_layers)
-    dense_weights = DynamicVector[Array2D] (capacity = total_dense_layers)
-    baises = DynamicVector[DynamicVector[Float32]] (capacity = total_bias_layers)
+    conv2D_weights = List[Array3D] (capacity = total_conv_layers)
+    dense_weights = List[Array2D] (capacity = total_dense_layers)
+    baises = List[List[Float32]] (capacity = total_bias_layers)
 
 
     var items = dict.values()
@@ -136,7 +136,7 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
     var s2: String = items.__str__()
     var l2:Int = items.__len__()
 
-    var shapes = DynamicVector[String] (capacity = l)
+    var shapes = List[String] (capacity = l)
     shapes = shape_manipulation(s2,l2)
 
     for i in range(len(shapes)):
@@ -148,7 +148,7 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
             var new_filter = Array3D(int_sizes[0]*int_sizes[1], int_sizes[2], int_sizes[3])
             conv2D_weights.append(new_filter)
         elif layers[i].__contains__("bias"):
-            var new_bias = DynamicVector[Float32] (capacity = int_sizes[0])
+            var new_bias = List[Float32] (capacity = int_sizes[0])
             baises.append(new_bias)
         elif layers[i].__contains__("dense") and layers[i].__contains__("kernel"):
             var new_dense = Array2D(int_sizes[0], int_sizes[1])
@@ -171,7 +171,7 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
         print(baises[i].capacity)
     
 
-    var f = open("/home/talha/Desktop/mojo/yolo/Parser/weights.txt", "r")  
+    var f = open("/home/lpt-10x/Desktop/Mojo-Yolo/Parser/weights.txt", "r")  
     var content:String = f.read()  
     f.close()
 
@@ -187,10 +187,8 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
 
     var loop_size:Int = 0
 
-    print("STARTING")
-    print(len(split_content))
+    print("total weights + layers",len(split_content))
     for i in range(len(split_content)):
-        # print(i)
         conv2d_layer = False
         dense_layer = False
         bais_layer = False
@@ -219,10 +217,6 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
             bais_layer = False
             i+=1
 
-
-        # if conv2d_layer == False and dense_layer == False and bais_layer == False:
-        #     continue
-        # else:
         for j in range(loop_size):
             if conv2d_layer == True and dense_layer == False and bais_layer == False:
                 var num:Float32 = extract_number(split_content[i])
@@ -251,16 +245,4 @@ fn collect_weights(inout conv2D_weights:DynamicVector[Array3D], inout dense_weig
 
         loop_size = 0
 
-
-    # print("WEIGHTS")
-    # # for i in range(len(conv2D_weights)):
-    # #     conv2D_weights[i].__printarray__()
-    
-    # for i in range(len(baises)):
-    #     for j in range(len(baises[i])):
-    #         print(baises[i][j])
-
-    # # for i in range(len(dense_weights)):
-    # #     dense_weights[i].__printarray__()
-                 
             

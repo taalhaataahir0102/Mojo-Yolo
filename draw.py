@@ -141,7 +141,7 @@ def load_floats_to_array(filepath):
 
 
 def main():
-    final_dense_output = load_floats_to_array('/home/talha/Desktop/mojo/yolo/final_layer.txt')
+    final_dense_output = load_floats_to_array('/home/lpt-10x/Desktop/Mojo-Yolo/final_layer.txt')
 
 
     start_time = time.time()
@@ -157,7 +157,7 @@ def main():
     # Print the reshaped output
 
 
-    image_path = '/home/talha/Desktop/mojo/yolo/Example/carbird.jpeg'  # Replace with your image file
+    image_path = '/home/lpt-10x/Desktop/Mojo-Yolo/Example/carbird.jpeg'  # Replace with your image file
     img, original_img, orig_h, orig_w = load_and_preprocess_image(image_path)
 
     decoded_boxes = decode_predictions(reshaped_output_numpy[0], orig_h, orig_w)

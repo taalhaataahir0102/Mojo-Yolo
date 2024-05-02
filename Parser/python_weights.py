@@ -62,10 +62,10 @@ def print_array(array, file):
         file.write("Unsupported shape.\n")
 
 def main():
-    path_to_hdf5 = "/home/talha/Desktop/mojo/yolo/Parser/model_weights.h5"
+    path_to_hdf5 = "/home/lpt-10x/Desktop/Mojo-Yolo/Parser/model_weights.h5"
     weights = read2_hdf5(path_to_hdf5)
 
-    with open("/home/talha/Desktop/mojo/yolo/Parser/weights.txt", "w") as file:
+    with open("/home/lpt-10x/Desktop/Mojo-Yolo/Parser/weights.txt", "w") as file:
         for key, value in weights.items():
             file.write(f"Key: {key}, Shape: {value.shape}\n")
             print_array(value, file)

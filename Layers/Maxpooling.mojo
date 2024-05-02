@@ -24,8 +24,6 @@ fn maxi(img: Array3D, depth:Int) -> Float32:
 fn maxpool(img: Array3D, pool:Int) raises -> Array3D:
     var input = py.import_module("builtins").input
     var new_img = Array3D(img.dim0,int(floor(img.dim1/pool)), int(floor(img.dim2/pool)))
-    print("img:", img.dim0, img.dim1, img.dim2)
-    print("new_img:", new_img.dim0, new_img.dim1, new_img.dim2)
 
     for j in range(0, img.dim1 - pool + 1, pool):
         for k in range(0, img.dim2 - pool + 1, pool):
