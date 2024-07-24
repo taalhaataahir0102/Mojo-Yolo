@@ -18,12 +18,18 @@ Other than mojo we've also run yolo inference via pytorch and max engine and com
 
 1. For smaller models, Mojo outperforms PyTorch and MAX Engine by 1.3x.
 2. As model size increases, Mojo's performance decreases, and at 250K parameters, PyTorch surpasses Mojo.
-3. Pytorch and MAX engine are performing almost rquivalent
+3. Pytorch and MAX engine are performing almost equivalent.
 
 ![Screenshot](https://raw.githubusercontent.com/taalhaataahir0102/Mojo-Yolo/main/Mojo/Example/Screenshot%20from%202024-07-24%2013-47-13.png)
 
 
 Profiling revealed that the matmul function in Mojo is significantly slower, consuming most computation time during inference. As model weight matrices grow, performance drops. For profiling my Mojo code, I used the time library available in Mojo and measured the time taken by different functions.
+
+## Execution
+
+To run mojo inference, go inside the Mojo/main.mojo and update the yolo_model function and add the weigts file in Mojo/Parser (.h5 file format) and run the main.mojo file
+
+For pytorch simply run the run.py file  and for MAX execute run.mojo file
 
 ## Future Work
 
