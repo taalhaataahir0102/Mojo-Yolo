@@ -11,26 +11,18 @@ This project implements the YOLO object detection algorithm using Mojo, incorpor
 - **Convolutional Layers**
 - **Max Pooling Layers**
 - **Dense (Fully Connected) Layers**
-
-One of the key techniques used in this implementation is the `im2col` algorithm, which optimizes the convolution operation.
-
-### im2col Algorithm
-
-The `im2col` algorithm transforms the convolution operation into a matrix multiplication problem. By rearranging the input data into column vectors, `im2col` allows the use of highly optimized matrix multiplication routines, leading to significant performance improvements. This method is particularly effective for modern deep learning libraries and hardware.
-
+- **Activation functions**
+Other than mojo we've also run yolo inference via pytorch and max engine and compared the performance 
 ## Performance
 
-Our implementation is designed for efficiency and speed. Through careful optimization and the use of the `MAX` engine for heavy computations such as matrix multiplication, our YOLO implementation is **2x faster than the TensorFlow implementation**.
+1. For smaller models, Mojo outperforms PyTorch and MAX Engine by 1.3x.
+2. As model size increases, Mojo's performance decreases, and at 250K parameters, PyTorch surpasses Mojo.
+3. Pytorch and MAX engine are performing almost rquivalent
 
-### Key Features
+Profiling revealed that the matmul function in Mojo is significantly slower, consuming most computation time during inference. As model weight matrices grow, performance drops. For profiling my Mojo code, I used the time library available in Mojo and measured the time taken by different functions.
 
-- **Optimized Layers**: Efficient implementations of convolutional, max pooling, and dense layers.
-- **im2col Algorithm**: Utilized for optimizing convolutional operations.
-- **MAX Engine**: Employed for handling intensive computations to maximize performance.
+## Future Work
 
-## Getting Started
-
-To run this project, use the following command:
-
-```sh
-mojo main.mojo
+1. Improve the matmul function by exposing L2 and L3 caching.
+2. Enhance Mojo data structures by introducing efficient slicing.
+3. Utilize MAX Engine for matmul, leveraging their optimized kernels for various CPUs.
