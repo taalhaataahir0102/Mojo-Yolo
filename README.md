@@ -11,6 +11,7 @@ This project implements the YOLO object detection algorithm using Mojo, incorpor
 - **Convolutional Layers**
 - **Max Pooling Layers**
 - **Dense (Fully Connected) Layers**
+- **Batch Normalization Layers**
 - **Activation functions**
 
 Other than mojo we've also run yolo inference via pytorch and max engine and compared the performance 
